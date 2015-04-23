@@ -7,7 +7,7 @@ var BowlingGame = (function() {
   }
 
   BowlingGame.prototype.addRoll = function(partialScore) {
-    if (this.currentFrame.isFinished())
+    if (!this.currentFrame.hasRollsAvailable())
       this.startNewFrame();
 
     this.frameScorer.addRoll(partialScore, this.currentFrame);
@@ -22,7 +22,7 @@ var BowlingGame = (function() {
   };
 
   BowlingGame.prototype.isFinished = function() {
-    return this.frames.length == 10 && this.currentFrame.isFinished();
+    return this.frames.length == 10 && !this.currentFrame.hasRollsAvailable();
   };
 
   BowlingGame.prototype.updateScore = function() {
@@ -33,7 +33,7 @@ var BowlingGame = (function() {
   };
 
   BowlingGame.prototype.startNewFrame = function() {
-    this.currentFrame = new BowlingFrame();
+    this.currentFrame = new BowlingFrame(this.frames.length+1);
     return this.frames.push(this.currentFrame);
   };
 

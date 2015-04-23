@@ -1,5 +1,6 @@
 var BowlingFrame = (function() {
-  function BowlingFrame() {
+  function BowlingFrame(id) {
+    this.id = id;
     this.NUM_OF_PINS = 10;
     this.remainingPins = this.NUM_OF_PINS;
     this.rollsAmount = 2;
@@ -12,18 +13,14 @@ var BowlingFrame = (function() {
     return (this.rollsAmount - this.partialScores.length) > 0;
   };
 
-  BowlingFrame.prototype.isFinished = function() {
-    return !this.hasRollsAvailable() || this.hasBonus();
-  };
-
   BowlingFrame.prototype.hasBonus = function() {
     return this.bonus != 'None';
   };
 
   BowlingFrame.prototype.addRoll = function(partialScore) {
     this.partialScores.push(partialScore);
-    this.setBonus(partialScore);
     this.remainingPins -= partialScore;
+    this.setBonus(partialScore);
   };
 
   BowlingFrame.prototype.calculateScore = function() {
@@ -37,9 +34,20 @@ var BowlingFrame = (function() {
   BowlingFrame.prototype.setBonus = function(partialScore) {
     if(partialScore == this.NUM_OF_PINS){
       this.bonus = 'Strike';
+      if (this.id == 10){
+        this.rollsAmount = 3;
+        this.remainingPins = this.NUM_OF_PINS;
+      }
+      else{
+        this.rollsAmount = 1;
+      }
     }
-    else if(partialScore == this.remainingPins){
+    else if(this.remainingPins === 0){
       this.bonus = 'Spare';
+      if (this.id == 10){
+        this.remainingPins = this.NUM_OF_PINS;
+        this.rollsAmount = 3;
+      }
     }
   };
 

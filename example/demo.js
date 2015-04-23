@@ -34,7 +34,7 @@ updateFrame = function(frame, frameIndex){
     rollScoreId = frameScoreId + '_' + (scoreIndex+1);
     if (frame.bonus == 'Spare' && scoreIndex == 1)
       score = '/';
-    else if (frame.bonus == 'Strike')
+    else if (frame.bonus == 'Strike' && score == 10)
       score = 'X';
     document.getElementById(rollScoreId).innerHTML = score;
   });

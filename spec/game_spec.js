@@ -33,17 +33,17 @@ describe('Game class', function(){
       expect(game.frameScorer.updatePendingFrames).toHaveBeenCalled();
     });
 
-    describe('when currentFrame is not finished', function(){
+    describe('when currentFrame hasRollsAvailable', function(){
       it("should not create a new frame", function() {
-        spyOn(game.currentFrame, 'isFinished').and.returnValue(false);
+        spyOn(game.currentFrame, 'hasRollsAvailable').and.returnValue(true);
         expect(game.addRoll(4));
         expect(game.startNewFrame).not.toHaveBeenCalled();
       });
     });
 
-    describe('when currentFrame is finished', function(){
+    describe('when currentFrame has not rolls available', function(){
       it("should not create a new frame", function() {
-        spyOn(game.currentFrame, 'isFinished').and.returnValue(true);
+        spyOn(game.currentFrame, 'hasRollsAvailable').and.returnValue(false);
         expect(game.addRoll(4));
         expect(game.startNewFrame).toHaveBeenCalled();
       });
